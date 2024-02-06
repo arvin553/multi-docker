@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t arvin/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true arvin/react-test npm test
+
+after_success:
+  - docker build -t arvin/multi-client ./client
+  - docker build -t arvin/multi-nginx ./nginx
+  - docker build -t arvin/multi-server ./server
+  - docker build -t arvin/multi-worker ./worker

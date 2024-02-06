@@ -13,3 +13,10 @@ after_success:
   - docker build -t arvin/multi-nginx ./nginx
   - docker build -t arvin/multi-server ./server
   - docker build -t arvin/multi-worker ./worker
+  #Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Take those images and push them to docker hub
+  - docker push arvin/multi-client
+  - docker push arvin/multi-nginx
+  - docker push arvin/multi-server
+  - docker push arvin/multi-worker
